@@ -1,5 +1,5 @@
-# dudebot
-A multi-purpose Discord bot, with the great Jeff Lebowski as its avatar.
+# Dude Bot
+A multi-purpose Discord bot, with the great Jeffrey Lebowski as its avatar.
 
 This readme is WIP.
 
