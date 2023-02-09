@@ -1,0 +1,12 @@
+{
+	"name": "help",
+	"description": "Gets help for a particular command.",
+	"options": [
+		{
+			"type": 3,
+			"name": "command",
+			"description": "The particular command to get information about."
+		}
+	],
+	"long_description": "Dude is a multi-purpose bot with a variety of useful features.\n\n**Discord Server:**\nFor help, feedback, discussion, etc. relating to the bot, the official Dude discord server is here: https://discord.gg/MJNG7wzAMx\n\n**Permissions:**\nDiscord contains a built-in feature to manage slash command permissions, so no permissions functionality is provided in the bot itself, though there are future plans to add commands to automatically manage these Discord settings.\n\nUntil then, you can find these settings under Server Settings > Integrations > Dude, from there you can specify which roles are allowed to execute each command. The recommended commands to restrict are add/delete for routines, colors, and reminder channels, reminder settings, and new user join settings.\n\n**/help Usage:**\nThis command prints this message and shows the top level commands, or provides information on a given command.\n\nTo view information for a specific command, use /help <command> where <command> is the command you want information on.\n\nThis works for subcommands and arguments as well as top level commands.\n\nFor example, '/help routine', '/help routine view', '/help routine view one', and '/help view one trigger' are all valid /help commands."
+}

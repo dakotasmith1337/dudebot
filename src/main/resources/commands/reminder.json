@@ -1,0 +1,405 @@
+{
+	"name": "reminder",
+	"description": "Brings up the menu of reminder commands.",
+	"options": [{
+			"type": 1,
+			"name": "add",
+			"description": "Adds a new reminder for either a specific time or an offset from now.",
+			"options": [{
+					"type": 3,
+					"name": "event",
+					"description": "The text you want Dude to send you when the reminder triggers.",
+					"required": true,
+                    "max_length": 1900
+				},
+				{
+					"type": 5,
+					"name": "mention",
+					"description": "Whether you want Dude to @ you when sending the reminder message.",
+					"required": true
+				},
+				{
+					"type": 5,
+					"name": "recurring",
+					"description": "Whether this reminder should repeat after a certain duration (hourly, daily, etc.).",
+					"required": true
+				},
+				{
+					"type": 5,
+					"name": "offset",
+					"description": "False if the reminder is for a specific point in time, true if it's for an amount of time from now.",
+					"required": true
+				},
+				{
+					"type": 4,
+					"name": "year",
+					"description": "The year or how many years from now the reminder should trigger.",
+					"max_value": 2147483647,
+					"min_value": 0
+				},
+				{
+					"type": 4,
+					"name": "month",
+					"description": "The month or how many months from now the reminder should trigger.",
+					"max_value": 2147483647,
+					"min_value": 0
+				},
+				{
+					"type": 4,
+					"name": "day",
+					"description": "The day or how many days from now the reminder should trigger.",
+					"max_value": 2147483647,
+					"min_value": 0
+				},
+				{
+					"type": 4,
+					"name": "hour",
+					"description": "The hour or how many days from now the reminder should trigger.",
+					"max_value": 2147483647,
+					"min_value": 0
+				},
+				{
+					"type": 5,
+					"name": "hourisam",
+					"description": "If 'offset' is false, whether the hour argument is a.m. (true) or p.m. (false)."
+				},
+				{
+					"type": 4,
+					"name": "minute",
+					"description": "The minute or how many minutes from now the reminder should trigger.",
+					"max_value": 2147483647,
+					"min_value": 0
+				},
+				{
+					"type": 3,
+					"name": "timezone",
+					"description": "If 'offset' is false, the timezone this reminder applies to. Defaults to America/Chicago.",
+					"choices": [{
+							"name": "Pacific/Honolulu",
+							"value": "Pacific/Honolulu"
+						},
+						{
+							"name": "America/Anchorage",
+							"value": "America/Anchorage"
+						},
+						{
+							"name": "America/Los_Angeles",
+							"value": "America/Los_Angeles"
+						},
+						{
+							"name": "America/Phoenix",
+							"value": "America/Phoenix"
+						},
+						{
+							"name": "America/Denver",
+							"value": "America/Denver"
+						},
+						{
+							"name": "America/Chicago",
+							"value": "America/Chicago"
+						},
+						{
+							"name": "America/New_York",
+							"value": "America/New_York"
+						},
+						{
+							"name": "Europe/London",
+							"value": "Europe/London"
+						},
+						{
+							"name": "Europe/Paris",
+							"value": "Europe/Paris"
+						}
+					],
+					"long_description": "When 'offset' is false and the reminder is for a specific point in time, this argument determines the time zone of that point in time.\n\nDiscord limits slash command argument choices to 25 maximum, which is not enough to enumerate all the world's timezones, so instead of trying to personally choose the most important 25, I've just included the ones I consider most common and will add more as needed."
+				},
+				{
+					"type": 4,
+					"name": "frequencyamount",
+					"description": "Used with 'frequency' to specify an amount. See /help reminder add frequencyamount for an example.",
+					"long_description": "This argument specifies the amount of the frequency. For example, if 'frequency' is set to weekly, providing a value of 2 for this argument would result in a biweekly reminder."
+				},
+				{
+					"type": 3,
+					"name": "frequency",
+					"description": "If 'recurring' is true, how frequently the reminder should repeat.",
+					"choices": [{
+							"name": "hourly",
+							"value": "HOURS"
+						},
+						{
+							"name": "daily",
+							"value": "DAYS"
+						},
+						{
+							"name": "weekly",
+							"value": "WEEKS"
+						},
+						{
+							"name": "monthly",
+							"value": "MONTHS"
+						},
+						{
+							"name": "yearly",
+							"value": "YEARS"
+						}
+                    ]
+				}
+			],
+			"long_description": "This command adds a reminder for a specific time or a specific amount of time from now, based on the value of the 'offset' argument. The reminder message will be sent in the channel the add command is used in. Each user may only have three active reminders at a time, and a reminder *may* not go off at the exact time it is given; see the 'Why so strict?' section below.\n\nNOTE: Reminder time precision does not go beyond minutes, which may not be intuitive when 'offset' is true and 'minute' is provided. E.g. setting a 10 minute reminder at 11:49:30 will cause the reminder to go off at 12:00, not 11:59:30.\n\nWhen 'offset' is false, if any of the time components are left null, they default to the soonest possible value that is in the future based on the other components. For example, if you leave year null, it will default to the current year if the month, day, hour, and minute components would result in a time in the future, otherwise it will default to next year. The only exception to this is the most granular argument, minute, which will default to :00.\n\n**Why so strict?**\nDiscord only allows bots to send 50 requests per second, meaning scalability is a major concern for this feature, primarily around major spikes. For example, if this bot becomes popular, it is not hard to imagine hundreds or even thousands of servers using this feature to send a message along the lines of '@everyone Happy New Year!' at 12:00 a.m. on January 1st. It is for this reason that reminders are limited to 3 per user. However, Dude does his best to provide what guarantees he can: reminders are sent out on a 'first added, first served' basis, and the add confirmation message will inform you of your reminder's place in the queue for that minute."
+		},
+		{
+			"type": 1,
+			"name": "delete",
+			"description": "Deletes a reminder.",
+			"options": [{
+				"type": 4,
+				"name": "id",
+				"description": "The ID of the reminder to delete.",
+				"required": true
+			}]
+		},
+		{
+			"type": 1,
+			"name": "modify",
+			"description": "Modifies a reminder. See /help reminder modify for more info.",
+			"options": [{
+					"type": 4,
+					"name": "id",
+					"description": "The ID of the reminder to modify.",
+					"required": true
+				},
+				{
+					"type": 3,
+					"name": "event",
+					"description": "The text you want Dude to send you when the reminder triggers."
+				},
+				{
+					"type": 5,
+					"name": "mention",
+					"description": "Whether you want Dude to @ you when sending the reminder message."
+				},
+				{
+					"type": 5,
+					"name": "recurring",
+					"description": "Whether this reminder should repeat after a certain duration (hourly, daily, etc.)."
+				},
+				{
+					"type": 5,
+					"name": "offset",
+					"description": "False for a specific point in time, true for an amount of time from now."
+				},
+				{
+					"type": 4,
+					"name": "year",
+					"description": "The year or how many years from now the reminder should trigger.",
+					"min_value": 0
+				},
+				{
+					"type": 4,
+					"name": "month",
+					"description": "The month or how many months from now the reminder should trigger.",
+					"min_value": 0
+				},
+				{
+					"type": 4,
+					"name": "day",
+					"description": "The day or how many days from now the reminder should trigger.",
+					"min_value": 0
+				},
+				{
+					"type": 4,
+					"name": "hour",
+					"description": "The hour or how many days from now the reminder should trigger.",
+					"min_value": 0
+				},
+				{
+					"type": 5,
+					"name": "hourisam",
+					"description": "If 'offset' is false, whether the hour argument is a.m. (true) or p.m. (false)."
+				},
+				{
+					"type": 4,
+					"name": "minute",
+					"description": "The minute or how many minutes from now the reminder should trigger.",
+					"min_value": 0
+				},
+				{
+					"type": 3,
+					"name": "timezone",
+					"description": "If 'offset' is false, the timezone this reminder applies to. Defaults to America/Chicago.",
+					"choices": [{
+							"name": "Pacific/Honolulu",
+							"value": "Pacific/Honolulu"
+						},
+						{
+							"name": "America/Anchorage",
+							"value": "America/Anchorage"
+						},
+						{
+							"name": "America/Los_Angeles",
+							"value": "America/Los_Angeles"
+						},
+						{
+							"name": "America/Phoenix",
+							"value": "America/Phoenix"
+						},
+						{
+							"name": "America/Denver",
+							"value": "America/Denver"
+						},
+						{
+							"name": "America/Chicago",
+							"value": "America/Chicago"
+						},
+						{
+							"name": "America/New_York",
+							"value": "America/New_York"
+						},
+						{
+							"name": "Europe/London",
+							"value": "Europe/London"
+						},
+						{
+							"name": "Europe/Paris",
+							"value": "Europe/Paris"
+						}
+					],
+					"long_description": "When 'offset' is false and the reminder is for a specific point in time, this argument determines the time zone of that point in time.\n\nDiscord limits slash command argument choices to 25 maximum, which is not enough to enumerate all the world's timezones, so instead of trying to personally choose the most important 25, I've just included the ones I consider most common and will add more as needed."
+				},
+				{
+					"type": 4,
+					"name": "frequencyamount",
+					"description": "Used with 'frequency' to specify an amount. See /help reminder add frequencyamount for an example.",
+					"long_description": "This argument specifies the amount of the frequency. For example, if 'frequency' is set to weekly, providing a value of 2 for this argument would result in a biweekly reminder."
+				},
+				{
+					"type": 3,
+					"name": "frequency",
+					"description": "If 'recurring' is true, how frequently the reminder should repeat.",
+					"choices": [{
+							"name": "hourly",
+							"value": "HOURS"
+						},
+						{
+							"name": "daily",
+							"value": "DAYS"
+						},
+						{
+							"name": "weekly",
+							"value": "WEEKS"
+						},
+						{
+							"name": "monthly",
+							"value": "MONTHS"
+						},
+						{
+							"name": "yearly",
+							"value": "YEARS"
+						}
+					]
+				},
+				{
+					"type": 7,
+					"name": "channel",
+					"description": "The channel you want the reminder message to be sent in.",
+                    "channel_types": [0,1,3]
+				}
+			],
+			"long_description": "This command allows you to modify any of the individual fields of a reminder.\n\n**Warning:** reminder times are *immutable*. This means if you intend to change a reminder's time, you must fully specify its components (essentially, you must create a new time from scratch). You may not, for example, given a reminder with 'offset' set to false and a time of 12 a.m. on 1/1, only put '2' for 'hour' to change the time to 2 a.m. on 1/1; you must once again fully specify the month, day, hour, and 'am' values."
+		},
+		{
+			"type": 2,
+			"name": "view",
+			"description": "View your list of reminders or detailed info for one of your reminders.",
+			"options": [{
+					"type": 1,
+					"name": "one",
+					"description": "Views detailed information for one of your reminders.",
+					"options": [{
+						"type": 4,
+						"name": "id",
+						"description": "The ID of the reminder to view.",
+						"required": true
+					}]
+				},
+				{
+					"type": 1,
+					"name": "list",
+					"description": "Views your list of reminders."
+				}
+			]
+		},
+		{
+			"type": 2,
+			"name": "channel",
+			"description": "Add/view/delete channels to filter on for reminders.",
+			"options": [{
+					"type": 1,
+					"name": "add",
+					"description": "Adds a channel to filter reminders on (allowed or blocked depending on the 'whitelist' setting).",
+					"options": [{
+						"type": 7,
+						"name": "channel",
+						"description": "The channel to add to the reminder filter list.",
+						"required": true,
+						"channel_types": [0]
+					}],
+					"dm_permission": false
+				},
+				{
+					"type": 1,
+					"name": "delete",
+					"description": "Deletes a channel from the reminder filter list.",
+					"options": [{
+						"type": 7,
+						"name": "channel",
+						"description": "The reminder channel to delete.",
+						"required": true,
+						"channel_types": [0]
+					}],
+					"dm_permission": false
+				},
+				{
+					"type": 1,
+					"name": "view",
+					"description": "Views the current list of channels in the reminder filter list.",
+					"dm_permission": false
+				}
+			],
+            "dm_permission": false
+		},
+		{
+			"type": 2,
+			"name": "settings",
+			"description": "View/modify settings for reminders.",
+			"options": [{
+					"type": 1,
+					"name": "view",
+					"description": "Views the settings for reminders.",
+					"dm_permission": false
+				},
+				{
+					"type": 1,
+					"name": "modify",
+					"description": "Modifies the settings for reminders.",
+					"options": [
+						{
+							"type": 5,
+							"name": "restrictreminders",
+							"description": "Whether reminder messages should be limited by channels in the reminder list."
+						},
+						{
+							"type": 5,
+							"name": "whitelist",
+							"description": "Whether the reminder channel list is a whitelist or a blacklist."
+						}
+					],
+					"dm_permission": false
+				}
+			],
+            "dm_permission": false
+		}
+	],
+	"long_description": "This group of commands concerns reminders, which is a timed message from Dude (that optionally can ping you) containing a custom message. The message is sent in the channel where the command used to create the reminder was sent from. This command can be used anywhere, including outside of guilds (i.e., in DMs with Dude). Each user is allowed 3 reminders total. Within guilds, reminder admins can configure which channels are acceptable for reminders to be used. The time can be configured to a specific point in time (e.g. tomorrow at 5 p.m.) or to a specific amount of time after the command is used (e.g. 1 hour from now). However, this time is not guaranteed; see /help reminder add for more info."
+}

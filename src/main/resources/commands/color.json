@@ -1,0 +1,76 @@
+{
+	"name": "color",
+	"description": "Brings up the menu of color commands.",
+	"options": [
+		{
+			"type": 1,
+			"name": "add",
+			"description": "Adds a new color.",
+			"options": [
+				{
+					"type": 3,
+					"name": "name",
+					"description": "The name of the new color role.",
+					"required": true
+				},
+				{
+					"type": 4,
+					"name": "red",
+					"description": "The red RGB value, between 0 and 255, inclusive.",
+					"required": true,
+					"min_value": 0,
+					"max_value": 255
+				},
+				{
+					"type": 4,
+					"name": "green",
+					"description": "The green RGB value, between 0 and 255, inclusive.",
+					"required": true,
+					"min_value": 0,
+					"max_value": 255
+				},
+				{
+					"type": 4,
+					"name": "blue",
+					"description": "The blue RGB value, between 0 and 255, inclusive.",
+					"required": true,
+					"min_value": 0,
+					"max_value": 255
+				}
+			]
+		},
+		{
+			"type": 1,
+			"name": "delete",
+			"description": "Deletes a color.",
+			"options": [
+				{
+					"type": 8,
+					"name": "role",
+					"description": "The color role to delete.",
+					"required": true
+				}
+			]
+		},
+		{
+			"type": 1,
+			"name": "view",
+			"description": "Views the list of color roles."
+		},
+		{
+			"type": 1,
+			"name": "set",
+			"description": "Applies a color role to yourself.",
+			"options": [
+				{
+					"type": 8,
+					"name": "role",
+					"description": "The color role to apply. Choose your existing color to unset it."
+				}
+			],
+			"long_description": "This command applies the chosen color role to yourself. Any existing color role you have will be removed. Leave the role argument blank to remove your color role without choosing a new one."
+		}
+	],
+    "dm_permission": false,
+	"long_description": "Dudes's color commands are an easy way to manage using certain roles explicitly for coloring users' usernames. Given a name and an RGB value, you can create new color roles and users can select one to set on themselves."
+}

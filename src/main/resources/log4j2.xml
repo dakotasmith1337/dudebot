@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<File name="dudeLog" fileName="logs/dude.log">
+			<PatternLayout pattern="%d{ISO8601} [%-5p] %c{1}.%M - %m%n"/>
+		</File>
+		<File name="defaultLog" fileName="logs/default.log">
+			<PatternLayout pattern="%d{ISO8601} [%-5p] %c{1}.%M - %m%n"/>
+		</File>
+	</Appenders>
+	<Loggers>
+		<Root level="debug">
+			<AppenderRef ref="defaultLog"/>
+		</Root>
+		<Logger name="dakota.dude" level="debug" additivity="false">
+			<AppenderRef ref="dudeLog"/>
+		</Logger>
+	</Loggers>
+</Configuration>

@@ -1,0 +1,159 @@
+{
+	"name": "routine",
+	"description": "Brings up the menu of routine commands.",
+	"options": [
+		{
+			"type": 1,
+			"name": "add",
+			"description": "Adds a new routine.",
+			"options": [
+				{
+					"type": 3,
+					"name": "trigger",
+					"description": "The phrase that activates this routine and triggers a response.",
+					"required": true,
+                    "max_length": 768
+				},
+				{
+					"type": "3",
+					"name": "response",
+					"description": "The response that is sent when the routine is activated.",
+					"required": true,
+                    "max_length": 768
+				},
+				{
+					"type": "3",
+					"name": "findsetting",
+					"description": "Defines how the trigger is found. For more info, view the help command.",
+					"required": true,
+					"choices": [
+						{
+							"name": "contains",
+							"value": "CONTAINS"
+						},
+						{
+							"name": "word",
+							"value": "WORD"
+						},
+						{
+							"name": "exact",
+							"value": "EXACT"
+						}
+					],
+					"long_description": "The 'findsetting' argument has 3 settings that control how the routine's trigger is found in each message. Contains will cause the routine to activate if the trigger is found anywhere in the message, Word will only activate the routine if the trigger is a standalone word (i.e. surrounded by whitespace, punctuation, or the beginning or end of the message), and Exact will only activate if the message is equal to the trigger."
+				},
+				{
+					"type": "5",
+					"name": "casesensitive",
+					"description": "Whether case should be considered when searching for the trigger.",
+					"required": true
+				},
+				{
+					"type": "8",
+					"name": "filterrole",
+					"description": "An optional role that the routine should filter by if 'filter' is set to true."
+				}
+			]
+		},
+		{
+			"type": 1,
+			"name": "delete",
+			"description": "Deletes a routine.",
+			"options": [
+				{
+					"type": 3,
+					"name": "trigger",
+					"description": "The trigger of the routine to delete.",
+					"required": true
+				}
+			]
+		},
+		{
+			"type": 1,
+			"name": "modify",
+			"description": "Modifies an existing routine. You only need to provide a value for the fields you intend to change.",
+			"options": [
+				{
+					"type": 3,
+					"name": "existingtrigger",
+					"description": "The trigger of the routine to modify.",
+                    "max_length": 768
+				},
+				{
+					"type": 3,
+					"name": "trigger",
+					"description": "The phrase that activates this routine and triggers a response.",
+                    "max_length": 768
+				},
+				{
+					"type": 3,
+					"name": "response",
+					"description": "The response that is sent when the routine is activated.",
+                    "max_length": 768
+				},
+				{
+					"type": "3",
+					"name": "findsetting",
+					"description": "Defines how the trigger is found. For more info, view the help command.",
+					"choices": [
+						{
+							"name": "contains",
+							"value": "CONTAINS"
+						},
+						{
+							"name": "word",
+							"value": "WORD"
+						},
+						{
+							"name": "exact",
+							"value": "EXACT"
+						}
+					],
+					"long_description": "The 'findsetting' argument has 3 settings that control how the routine's trigger is found in each message. Contains will cause the routine to activate if the trigger is found anywhere in the message, Word will only activate the routine if the trigger is a standalone word (i.e. surrounded by whitespace, punctuation, or the beginning or end of the message), and Exact will only activate if the message is equal to the trigger."
+				},
+				{
+					"type": "5",
+					"name": "casesensitive",
+					"description": "Whether case should be considered when searching for the trigger."
+				},
+				{
+					"type": "5",
+					"name": "filter",
+					"description": "Whether the routine should only activate if the sender is a member of a certain role or not."
+				},
+				{
+					"type": "8",
+					"name": "filterrole",
+					"description": "The role that the routine should filter by if 'filter' is set to true."
+				}
+			]
+		},
+		{
+			"type": 2,
+			"name": "view",
+			"description": "View the list of routines or detailed info for one routine.",
+			"options": [
+				{
+					"type": 1,
+					"name": "one",
+					"description": "Views detailed information on one routine.",
+					"options": [
+						{
+							"type": 3,
+							"name": "trigger",
+							"description": "The trigger of the routine to view.",
+							"required": true
+						}
+					]
+				},
+				{
+					"type": 1,
+					"name": "list",
+					"description": "Views the full list of this guild's routines."
+				}
+			]
+		}
+	],
+    "dm_permission": false,
+	"long_description": "This group of commands concerns routines, which are essentially automatic replies sent when a message contains a certain keyword. You can customize the keyword, the response, what users the routine applies to, whether the message is sent as TTS, and how the keyword is detected (the 'explicit' argument)."
+}
